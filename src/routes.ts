@@ -9,4 +9,15 @@ export async function routes(app: FastifyInstance) {
   }
 
   const sql = neon(process.env.DATABASE_URL);
+
+  app.get(
+    "/usuarios/getUsuarios",
+    {
+      schema: {
+        tags: ["usuarios"],
+        description: "Retorna todos os usuários",
+      },
+    },
+    async () => {}
+  );
 }
