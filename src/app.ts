@@ -1,9 +1,9 @@
-require("dotenv").config();
 import { fastify } from "fastify";
 import { fastifyCors } from "@fastify/cors";
 import {
   validatorCompiler,
   serializerCompiler,
+  jsonSchemaTransform,
 } from "fastify-type-provider-zod";
 import { fastifySwagger } from "@fastify/swagger";
 import { fastifySwaggerUi } from "@fastify/swagger-ui";
@@ -15,6 +15,7 @@ app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
 app.register(fastifyCors, { origin: "*" });
+
 app.register(fastifySwagger, {
   openapi: {
     info: {
@@ -23,9 +24,11 @@ app.register(fastifySwagger, {
       version: "1.0.0",
     },
   },
+  transform: jsonSchemaTransform,
 });
+
 app.register(fastifySwaggerUi, {
-  routePrefix: "/docs",
+  routePrefix: "/swagger",
 });
 
 app.register(routes);
